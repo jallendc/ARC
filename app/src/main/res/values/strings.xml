@@ -5,4 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="maincontrol">Main Controller</string>
+
+    <!--' Strings for the Diff Drive Controller '-->
+    <string name="title_activity_diff_drive_cntrl">DiffDriveCntrl</string>
+    <string name="ddcontroller">Differential Drive</string>
+
 </resources>

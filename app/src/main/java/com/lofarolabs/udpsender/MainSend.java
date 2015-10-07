@@ -1,5 +1,6 @@
 package com.lofarolabs.udpsender;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -191,6 +192,11 @@ public class MainSend extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.diff_cntrl) {
+            startActivity(new Intent(MainSend.this, DiffDriveCntrl.class));
             return true;
         }
 

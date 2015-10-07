@@ -2,32 +2,32 @@
 <items version="2" >
 
     <item
-        jar="/Users/geovana/AndroidStudioProjects/udpSender/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/geovana/AndroidStudioProjects/udpSender/app/build/intermediates/pre-dexed/release/classes-f7ebd9c97e3a79df4d19e8d58b6852aa8dbc0f66.jar" />
-    </item>
-    <item
-        jar="/Users/geovana/Documents/Develop/adt-bundle-mac-x86_64-20131030/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/geovana/AndroidStudioProjects/udpSender/app/build/intermediates/pre-dexed/release/support-annotations-21.0.3-b940ae057869dcf4a5ea6055c248399abc8d4456.jar" />
-    </item>
-    <item
-        jar="/Users/geovana/AndroidStudioProjects/udpSender/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="C:\Users\Jason A\Desktop\ScholaryPaper\ARC\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/geovana/AndroidStudioProjects/udpSender/app/build/intermediates/pre-dexed/release/classes-6cad4a734b2f741b1640a8f40d7c5d6a5a128963.jar" />
+        <dex dex="C:\Users\Jason A\Desktop\ScholaryPaper\ARC\app\build\intermediates\pre-dexed\debug\classes-0b230ea87c204b77bacf62a0ae1e56905341e7f9.jar" />
     </item>
     <item
-        jar="/Users/geovana/AndroidStudioProjects/udpSender/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="C:\Users\Jason A\Desktop\ScholaryPaper\ARC\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\jars\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\Jason A\Desktop\ScholaryPaper\ARC\app\build\intermediates\pre-dexed\debug\classes-7882778e421c8fd9450e037682621ca4ddfdc53d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Jason A\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\Jason A\Desktop\ScholaryPaper\ARC\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-a33705e2b0c39629d38a22b42a7f73855c26f558.jar" />
+    </item>
+    <item
+        jar="C:\Users\Jason A\Desktop\ScholaryPaper\ARC\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\jars\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/geovana/AndroidStudioProjects/udpSender/app/build/intermediates/pre-dexed/release/internal_impl-21.0.3-83a3d2ed165f420f59ce317ae0a25896a907fa8a.jar" />
+        <dex dex="C:\Users\Jason A\Desktop\ScholaryPaper\ARC\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-f57b78737bb91f348a6c29e0e3a403d851e314b5.jar" />
     </item>
 
 </items>
