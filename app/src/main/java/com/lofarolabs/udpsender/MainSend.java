@@ -1,6 +1,7 @@
 package com.lofarolabs.udpsender;
 
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,6 +52,42 @@ public class MainSend extends ActionBarActivity {
     Paint paint = new Paint();
     ImageView drawingImageView;
 
+    /* Adjustment for screen for x and y values for azpen tablet */
+    double y_adjust = 0.4167;
+    double x_adjust = 0.3333;
+
+    /* calibration for nexus 7 */
+    /**double touch_center_y = 660.0*y_adjust;
+    double touch_center_x = 960.0*x_adjust;
+    double touch_delta_x = 400.0*x_adjust;
+    double touch_delta_y = 280.0*y_adjust;
+    double joy_left_center_x = 245.0*x_adjust;
+    double joy_left_center_y = 880.0*y_adjust;
+    double joy_right_center_x = 1685.0*x_adjust;
+    double joy_right_center_y = 880.0*y_adjust;
+    double joy_right_radius = 180.0*y_adjust;
+    double joy_left_radius = 180.0*y_adjust;
+    double button_and_center_x = 1680.0*x_adjust;
+    double button_and_center_y = 570.0*y_adjust;
+    double button_and_radius = 60.0*y_adjust;
+    double button_at_center_x = 1680.0*x_adjust;
+    double button_at_center_y = 285.0*y_adjust;
+    double button_at_radius = 60.0*y_adjust;
+    double button_hash_center_x = 1520.0*x_adjust;
+    double button_hash_center_y = 425.0*y_adjust;
+    double button_hash_radius = 60.0*y_adjust;
+    double button_percent_center_x = 1825.0*x_adjust;
+    double button_percent_center_y = 425.0*y_adjust;
+    double button_percent_radius = 60.0*y_adjust;
+    double button_start_center_x = 365.0*x_adjust;
+    double button_start_center_y = 630.0*y_adjust;
+    double button_start_delta_x = 95.0*x_adjust;
+    double button_start_delta_y = 45.0*y_adjust;
+    double button_select_center_x = 120.0*x_adjust;
+    double button_select_center_y = 630.0*y_adjust;
+    double button_select_delta_x = 95.0*x_adjust;
+    double button_select_delta_y = 45.0*y_adjust;**/
+
     /* calibration for nexus 7 */
     double touch_center_y = 660.0;
     double touch_center_x = 960.0;
@@ -88,6 +125,8 @@ public class MainSend extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_launcher_arc);
+
+
 
         mActivePointers = new SparseArray<PointF>();
 
@@ -206,12 +245,17 @@ public class MainSend extends ActionBarActivity {
     /* Location information */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        Vibrator vibrator = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
+        //vibrator.vibrate(500); // 0.5 seconds
+
         int x = (int)event.getX();
         int y = (int)event.getY();
         txt_touch_x   = (TextView)findViewById(R.id.textView_touch_x);
         txt_touch_y   = (TextView)findViewById(R.id.textView_touch_y);
         txt_touch_x.setText(Integer.toString(x));
         txt_touch_y.setText(Integer.toString(y));
+        vibrator.vibrate(10);
         //txt1.setText(Integer.toString(event.getPointerCount()));
 
         switch (event.getAction()) {

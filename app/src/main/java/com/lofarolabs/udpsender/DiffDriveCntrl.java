@@ -8,6 +8,31 @@ import android.view.MenuItem;
 
 public class DiffDriveCntrl extends ActionBarActivity {
 
+
+    /* configuration for 1080 x 1920 Resolution  */
+    double touch_center_y = 632 ;
+    double touch_center_x = 959;
+    double touch_delta_x = 368;
+    double touch_delta_y = 256;
+    double slideL_center_x = 441;
+    double slideL_center_y = 632;
+    double slide_delta_x = 87;
+    double slide_delta_y = 375;
+    double slideR_center_x = 1477;
+    double slideR_center_y = 632;
+    /**double button_oneL_y = ;
+    double button_oneL_x = ;
+    double button_twoL_y = ;
+    double button_twoL_x = ;
+    double button_threeL_y = ;
+    double button_threeL_x = ;
+    double button_oneR_y = ;
+    double button_oneR_x = ;
+    double Button_twoR_x_y = ;
+    double button_twoR_x = ;
+    double button_threeR_y = ;
+    double button_threeR_x = ;**/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
