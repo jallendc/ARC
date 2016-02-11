@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.DatagramPacket;
+
+import android.view.WindowManager;
 import android.widget.Button;
 import android.view.View;
 import android.widget.TextView;
@@ -33,6 +36,7 @@ import android.graphics.Bitmap;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import android.text.SpannableString;
+import android.widget.Toast;
 
 public class MainSend extends ActionBarActivity {
     private static final String host = null;
@@ -52,73 +56,38 @@ public class MainSend extends ActionBarActivity {
     Paint paint = new Paint();
     ImageView drawingImageView;
 
-    /* Adjustment for screen for x and y values for azpen tablet */
-    double y_adjust = 0.4167;
-    double x_adjust = 0.3333;
+    /* calibration for use with other devices */
+    double touch_center_yP, touch_center_xP;
+    double touch_delta_yP, touch_delta_xP;
+    double joy_left_center_yP, joy_left_center_xP, joy_left_radiusP;
+    double joy_right_center_yP, joy_right_center_xP, joy_right_radiusP;
+    double button_and_center_yP, button_and_center_xP, button_and_radiusP;
+    double button_at_center_yP, button_at_center_xP, button_at_radiusP;
+    double button_hash_center_yP, button_hash_center_xP, button_hash_radiusP;
+    double button_percent_center_yP, button_percent_center_xP, button_percent_radiusP;
+    double button_start_center_yP, button_start_center_xP;
+    double button_start_delta_yP, button_start_delta_xP;
+    double button_select_center_yP, button_select_center_xP;
+    double button_select_delta_yP, button_select_delta_xP;
 
     /* calibration for nexus 7 */
-    /**double touch_center_y = 660.0*y_adjust;
-    double touch_center_x = 960.0*x_adjust;
-    double touch_delta_x = 400.0*x_adjust;
-    double touch_delta_y = 280.0*y_adjust;
-    double joy_left_center_x = 245.0*x_adjust;
-    double joy_left_center_y = 880.0*y_adjust;
-    double joy_right_center_x = 1685.0*x_adjust;
-    double joy_right_center_y = 880.0*y_adjust;
-    double joy_right_radius = 180.0*y_adjust;
-    double joy_left_radius = 180.0*y_adjust;
-    double button_and_center_x = 1680.0*x_adjust;
-    double button_and_center_y = 570.0*y_adjust;
-    double button_and_radius = 60.0*y_adjust;
-    double button_at_center_x = 1680.0*x_adjust;
-    double button_at_center_y = 285.0*y_adjust;
-    double button_at_radius = 60.0*y_adjust;
-    double button_hash_center_x = 1520.0*x_adjust;
-    double button_hash_center_y = 425.0*y_adjust;
-    double button_hash_radius = 60.0*y_adjust;
-    double button_percent_center_x = 1825.0*x_adjust;
-    double button_percent_center_y = 425.0*y_adjust;
-    double button_percent_radius = 60.0*y_adjust;
-    double button_start_center_x = 365.0*x_adjust;
-    double button_start_center_y = 630.0*y_adjust;
-    double button_start_delta_x = 95.0*x_adjust;
-    double button_start_delta_y = 45.0*y_adjust;
-    double button_select_center_x = 120.0*x_adjust;
-    double button_select_center_y = 630.0*y_adjust;
-    double button_select_delta_x = 95.0*x_adjust;
-    double button_select_delta_y = 45.0*y_adjust;**/
-
-    /* calibration for nexus 7 */
-    double touch_center_y = 660.0;
-    double touch_center_x = 960.0;
-    double touch_delta_x = 400.0;
-    double touch_delta_y = 280.0;
-    double joy_left_center_x = 245.0;
-    double joy_left_center_y = 880.0;
-    double joy_right_center_x = 1685.0;
-    double joy_right_center_y = 880.0;
-    double joy_right_radius = 180.0;
-    double joy_left_radius = 180.0;
-    double button_and_center_x = 1680.0;
-    double button_and_center_y = 570.0;
+    double touch_center_y = 660.0; double touch_center_x = 960.0;
+    double touch_delta_x = 400.0; double touch_delta_y = 280.0;
+    double joy_left_center_x = 245.0; double joy_left_center_y = 880.0;
+    double joy_right_center_x = 1685.0; double joy_right_center_y = 880.0;
+    double joy_right_radius = 180.0; double joy_left_radius = 180.0;
+    double button_and_center_x = 1680.0; double button_and_center_y = 570.0;
     double button_and_radius = 60.0;
-    double button_at_center_x = 1680.0;
-    double button_at_center_y = 285.0;
+    double button_at_center_x = 1680.0; double button_at_center_y = 285.0;
     double button_at_radius = 60.0;
-    double button_hash_center_x = 1520.0;
-    double button_hash_center_y = 425.0;
+    double button_hash_center_x = 1520.0; double button_hash_center_y = 425.0;
     double button_hash_radius = 60.0;
-    double button_percent_center_x = 1825.0;
-    double button_percent_center_y = 425.0;
+    double button_percent_center_x = 1825.0; double button_percent_center_y = 425.0;
     double button_percent_radius = 60.0;
-    double button_start_center_x = 365.0;
-    double button_start_center_y = 630.0;
-    double button_start_delta_x = 95.0;
-    double button_start_delta_y = 45.0;
-    double button_select_center_x = 120.0;
-    double button_select_center_y = 630.0;
-    double button_select_delta_x = 95.0;
-    double button_select_delta_y = 45.0;
+    double button_start_center_x = 365.0; double button_start_center_y = 630.0;
+    double button_start_delta_x = 95.0; double button_start_delta_y = 45.0;
+    double button_select_center_x = 120.0; double button_select_center_y = 630.0;
+    double button_select_delta_x = 95.0; double button_select_delta_y = 45.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,23 +95,46 @@ public class MainSend extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_launcher_arc);
 
+        /* Gets the Screen width and height of current device and converts Nexus 7 measurements
+         * for buttons above to the current device */
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(displayMetrics);
+        double device_width = displayMetrics.widthPixels;  double conversion_y = device_width/1920;
+        double device_height = displayMetrics.heightPixels; double conversion_x = device_height/1200;
 
+        touch_center_yP = touch_center_y*conversion_y;
+        touch_center_xP = touch_center_x*conversion_x;
+        touch_delta_yP = touch_delta_y*conversion_y;
+        touch_delta_xP = touch_delta_x*conversion_x;
+        joy_left_center_yP = joy_left_center_y*conversion_y;
+        joy_left_center_xP = joy_left_center_x*conversion_x;
+        joy_left_radiusP = joy_left_radius*conversion_y;
+        joy_right_center_yP = joy_right_center_y*conversion_y;
+        joy_right_center_xP = joy_right_center_x*conversion_x;
+        joy_right_radiusP = joy_right_radius*conversion_y;
+        button_and_center_yP = button_and_center_y*conversion_y;
+        button_and_center_xP = button_and_center_x*conversion_x;
+        button_and_radiusP = button_and_radius*conversion_y;
+        button_at_center_yP = button_at_center_y*conversion_y;
+        button_at_center_xP = button_at_center_x*conversion_x;
+        button_at_radiusP = button_at_radius*conversion_y;
+        button_hash_center_yP = button_hash_center_y*conversion_y;
+        button_hash_center_xP = button_hash_center_x*conversion_x;
+        button_hash_radiusP = button_hash_radius*conversion_y;
+        button_percent_center_yP = button_percent_center_y*conversion_y;
+        button_percent_center_xP = button_percent_center_x*conversion_x;
+        button_percent_radiusP = button_percent_radius*conversion_y;
+        button_start_center_yP = button_start_center_y*conversion_y;
+        button_start_center_xP = button_start_center_x*conversion_x;
+        button_start_delta_yP = button_start_delta_y*conversion_y;
+        button_start_delta_xP = button_start_delta_x*conversion_x;
+        button_select_center_yP = button_select_center_y*conversion_y;
+        button_select_center_xP = button_select_center_x*conversion_x;
+        button_select_delta_yP = button_select_delta_y*conversion_y;
+        button_select_delta_xP = button_select_delta_x*conversion_x;
 
         mActivePointers = new SparseArray<PointF>();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //BitmapDrawable ob = new BitmapDrawable(getResources(), bitmap)
         //image.setBackground(Drawable background)
@@ -227,19 +219,27 @@ public class MainSend extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        super.onOptionsItemSelected(item);
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id)
+        {
+            case R.id.action_settings:
+                Toast.makeText(getApplicationContext(),
+                        "On This Page",
+                        Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.diff_cntrl:
+                Toast.makeText(getApplicationContext(),
+                        "Switching Screens",
+                        Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, DiffDriveCntrl.class));
+
+                break;
         }
 
-        if (id == R.id.diff_cntrl) {
-            startActivity(new Intent(MainSend.this, DiffDriveCntrl.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     /* Location information */
@@ -399,14 +399,14 @@ public class MainSend extends ActionBarActivity {
 
         /* main touch */
         if(
-                x > (touch_center_x-touch_delta_x) &
-                x < (touch_center_x+touch_delta_x) &
-                y > (touch_center_y-touch_delta_y) &
-                y < (touch_center_y+touch_delta_y))
+                x > (touch_center_xP-touch_delta_xP) &
+                x < (touch_center_xP+touch_delta_xP) &
+                y > (touch_center_yP-touch_delta_yP) &
+                y < (touch_center_yP+touch_delta_yP))
         {
             button = ("t").getBytes();
-            double xx = (x-touch_center_x)/touch_delta_x;
-            double yy = -(y-touch_center_y)/touch_delta_y;
+            double xx = (x-touch_center_xP)/touch_delta_xP;
+            double yy = -(y-touch_center_yP)/touch_delta_yP;
 
             try {
 
@@ -430,11 +430,11 @@ public class MainSend extends ActionBarActivity {
         }
         /* left joystick */
         else if(
-                (Math.sqrt((x-joy_left_center_x)*(x-joy_left_center_x) + (y-joy_left_center_y)*(y-joy_left_center_y)) < joy_left_radius))
+                (Math.sqrt((x-joy_left_center_xP)*(x-joy_left_center_xP) + (y-joy_left_center_yP)*(y-joy_left_center_yP)) < joy_left_radiusP))
         {
             button = ("t").getBytes();
-            double xx = (x-joy_left_center_x)/joy_left_radius;
-            double yy = -(y-joy_left_center_y)/joy_left_radius;
+            double xx = (x-joy_left_center_xP)/joy_left_radiusP;
+            double yy = -(y-joy_left_center_yP)/joy_left_radiusP;
 
             try {
 
@@ -458,11 +458,11 @@ public class MainSend extends ActionBarActivity {
         }
         /* right joystick */
         else if(
-                (Math.sqrt((x-joy_right_center_x)*(x-joy_right_center_x) + (y-joy_right_center_y)*(y-joy_right_center_y)) < joy_right_radius))
+                (Math.sqrt((x-joy_right_center_xP)*(x-joy_right_center_xP) + (y-joy_right_center_yP)*(y-joy_right_center_yP)) < joy_right_radiusP))
         {
             button = ("t").getBytes();
-            double xx = (x-joy_right_center_x)/joy_right_radius;
-            double yy = -(y-joy_right_center_y)/joy_right_radius;
+            double xx = (x-joy_right_center_xP)/joy_right_radiusP;
+            double yy = -(y-joy_right_center_yP)/joy_right_radiusP;
 
             try {
 
@@ -487,11 +487,11 @@ public class MainSend extends ActionBarActivity {
 
         /* @button */
         else if(
-                (Math.sqrt((x-button_at_center_x)*(x-button_at_center_x) + (y-button_at_center_y)*(y-button_at_center_y)) < button_at_radius))
+                (Math.sqrt((x-button_at_center_xP)*(x-button_at_center_xP) + (y-button_at_center_yP)*(y-button_at_center_yP)) < button_at_radiusP))
         {
             button = ("t").getBytes();
-            double xx = (x-button_at_center_x)/button_at_radius;
-            double yy = -(y-button_at_center_y)/button_at_radius;
+            double xx = (x-button_at_center_xP)/button_at_radiusP;
+            double yy = -(y-button_at_center_yP)/button_at_radiusP;
 
             try {
 
@@ -515,11 +515,11 @@ public class MainSend extends ActionBarActivity {
 
         /* #button */
         else if(
-                (Math.sqrt((x-button_hash_center_x)*(x-button_hash_center_x) + (y-button_hash_center_y)*(y-button_hash_center_y)) < button_hash_radius))
+                (Math.sqrt((x-button_hash_center_xP)*(x-button_hash_center_xP) + (y-button_hash_center_yP)*(y-button_hash_center_yP)) < button_hash_radiusP))
         {
             button = ("t").getBytes();
-            double xx = (x-button_hash_center_x)/button_hash_radius;
-            double yy = -(y-button_hash_center_y)/button_hash_radius;
+            double xx = (x-button_hash_center_xP)/button_hash_radiusP;
+            double yy = -(y-button_hash_center_yP)/button_hash_radiusP;
 
             try {
 
@@ -543,11 +543,11 @@ public class MainSend extends ActionBarActivity {
 
         /* %button */
         else if(
-                (Math.sqrt((x-button_percent_center_x)*(x-button_percent_center_x) + (y-button_percent_center_y)*(y-button_percent_center_y)) < button_percent_radius))
+                (Math.sqrt((x-button_percent_center_xP)*(x-button_percent_center_xP) + (y-button_percent_center_yP)*(y-button_percent_center_yP)) < button_percent_radiusP))
         {
             button = ("t").getBytes();
-            double xx = (x-button_percent_center_x)/button_percent_radius;
-            double yy = -(y-button_percent_center_y)/button_percent_radius;
+            double xx = (x-button_percent_center_xP)/button_percent_radiusP;
+            double yy = -(y-button_percent_center_yP)/button_percent_radiusP;
 
             try {
 
@@ -570,11 +570,11 @@ public class MainSend extends ActionBarActivity {
 
         /* &button */
         else if(
-                (Math.sqrt((x-button_and_center_x)*(x-button_and_center_x) + (y-button_and_center_y)*(y-button_and_center_y)) < button_and_radius))
+                (Math.sqrt((x-button_and_center_xP)*(x-button_and_center_xP) + (y-button_and_center_yP)*(y-button_and_center_yP)) < button_and_radiusP))
         {
             button = ("t").getBytes();
-            double xx = (x-button_and_center_x)/button_and_radius;
-            double yy = -(y-button_and_center_y)/button_and_radius;
+            double xx = (x-button_and_center_xP)/button_and_radiusP;
+            double yy = -(y-button_and_center_yP)/button_and_radiusP;
 
             try {
 
@@ -597,10 +597,10 @@ public class MainSend extends ActionBarActivity {
 
         /* start button */
         else if(
-                x > (button_start_center_x-button_start_delta_x) &
-                x < (button_start_center_x+button_start_delta_x) &
-                y > (button_start_center_y-button_start_delta_y) &
-                y < (button_start_center_y+button_start_delta_y))
+                x > (button_start_center_xP-button_start_delta_xP) &
+                x < (button_start_center_xP+button_start_delta_xP) &
+                y > (button_start_center_yP-button_start_delta_yP) &
+                y < (button_start_center_yP+button_start_delta_yP))
         {
             try {
 
@@ -623,10 +623,10 @@ public class MainSend extends ActionBarActivity {
 
         /* select button */
         else if(
-                x > (button_select_center_x-button_select_delta_x) &
-                x < (button_select_center_x+button_select_delta_x) &
-                y > (button_select_center_y-button_select_delta_y) &
-                y < (button_select_center_y+button_select_delta_y))
+                x > (button_select_center_xP-button_select_delta_xP) &
+                x < (button_select_center_xP+button_select_delta_xP) &
+                y > (button_select_center_yP-button_select_delta_yP) &
+                y < (button_select_center_yP+button_select_delta_yP))
         {
             try {
 

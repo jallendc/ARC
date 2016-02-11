@@ -25,7 +25,7 @@
             android:name=".DiffDriveCntrl"
             android:label="@string/title_activity_diff_drive_cntrl"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
     </application>
 
