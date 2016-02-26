@@ -95,8 +95,8 @@ public class DiffDriveCntrl extends ActionBarActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(displayMetrics);
-        double device_width = displayMetrics.widthPixels;  double conversion_y = device_width/1280;
-        double device_height = displayMetrics.heightPixels; double conversion_x = device_height/720;
+        double device_width = displayMetrics.widthPixels;  double conversion_y = device_width/1280; //width of the background image
+        double device_height = displayMetrics.heightPixels; double conversion_x = device_height/720; //height of the background image
 
         touch_center_yP = touch_center_y * conversion_y;
         touch_center_xP = touch_center_x * conversion_x;
@@ -208,27 +208,14 @@ public class DiffDriveCntrl extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        super.onOptionsItemSelected(item);
         int id = item.getItemId();
 
-        switch (id)
-        {
-            case R.id.action_settings:
-                Toast.makeText(getApplicationContext(),
-                        "On This Page",
-                        Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.main_cntrl:
-                Toast.makeText(getApplicationContext(),
-                        "Switching Screens",
-                        Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, MainSend.class));
-
-                break;
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     /* Location information */

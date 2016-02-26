@@ -219,27 +219,14 @@ public class MainSend extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        super.onOptionsItemSelected(item);
         int id = item.getItemId();
 
-        switch (id)
-        {
-            case R.id.action_settings:
-                Toast.makeText(getApplicationContext(),
-                        "On This Page",
-                        Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.diff_cntrl:
-                Toast.makeText(getApplicationContext(),
-                        "Switching Screens",
-                        Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, DiffDriveCntrl.class));
-
-                break;
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     /* Location information */
